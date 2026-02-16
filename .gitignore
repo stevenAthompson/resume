@@ -1,0 +1,5 @@
+__pycache__/
+.gemini-repl/
+.gemini/
+*.pyc
+project_memory.db

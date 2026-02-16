@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{{person.full_name}} — Resume</title>
+  <style>
+    /* === Base === */
+    :root{
+      --bg:#0b0c10;
+      --page:#10121a;
+      --ink:#e8ecff;
+      --muted:#aab2d5;
+      --line:#262a3a;
+      --accent:#6aa0ff;
+      --accent2:#b07cff;
+      --sidebar:#0f1320;
+      --chip:#171b2a;
+      --shadow: 0 16px 40px rgba(0,0,0,.35);
+      --radius:18px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:linear-gradient(180deg,#07080c 0%, #0c0f1b 50%, #07080c 100%);
+      font-family:var(--font); color:var(--ink);
+      display:flex; align-items:flex-start; justify-content:center;
+      padding:24px;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .page{
+      width: 100%;
+      max-width: 980px;
+      background: var(--page);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .layout{display:grid; grid-template-columns: 290px 1fr; min-height: 100%;}
+    /* Sidebar */
+    .sidebar{
+      background: radial-gradient(1200px 500px at 10% 0%, rgba(106,160,255,.25), transparent 55%),
+                  radial-gradient(1200px 500px at 90% 30%, rgba(176,124,255,.22), transparent 60%),
+                  var(--sidebar);
+      border-right:1px solid var(--line);
+      padding:22px 20px 18px;
+    }
+    .name{
+      font-size: 28px;
+      line-height:1.05;
+      font-weight: 800;
+      letter-spacing:.2px;
+      margin: 2px 0 8px;
+    }
+    .name span{display:block}
+    .role{
+      color:var(--muted);
+      font-size:13px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+    .section-title{
+      margin: 18px 0 8px;
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: var(--muted);
+    }
+    .block{
+      background: rgba(16,18,26,.55);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius: 14px;
+      padding: 10px 10px 8px;
+    }
+    .pi{
+      display:grid;
+      gap:10px;
+    }
+    .pi-item{display:grid; gap:2px}
+    .pi-label{font-size:11px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase}
+    .pi-value{font-size:13px; color:var(--ink)}
+    .skills{display:grid; gap:10px}
+    .skill{display:grid; gap:6px}
+    .skill-name{font-size:13px}
+    .skill-bar{
+      height:8px;
+      background: rgba(255,255,255,.06);
+      border-radius:999px;
+      overflow:hidden;
+      position:relative;
+    }
+    .skill-bar span{
+      display:block;
+      height:100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius:999px;
+    }
+    .list{margin:0; padding-left: 18px; color:var(--ink)}
+    .list li{margin: 6px 0; font-size:13px; color:var(--ink)}
+    .list a{color:var(--ink)}
+    .list a:hover{color:var(--accent)}
+    /* Main */
+    .main{padding:22px 22px 18px}
+    .summary{
+      margin: 0 0 12px;
+      font-size: 14px;
+      line-height:1.55;
+      color: var(--ink);
+    }
+    .job{
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+    .job:first-of-type{border-top:0; padding-top:0; margin-top:0;}
+    .job-header{
+      display:grid;
+      grid-template-columns: 140px 1fr;
+      gap: 14px;
+      align-items:start;
+    }
+    .job-dates{
+      font-family:var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      padding-top: 2px;
+    }
+    .job-title{font-size:15px; font-weight: 750; margin-bottom:2px}
+    .job-company{font-size:13px; color: var(--muted); margin-bottom:8px}
+    .job-desc{margin: 0 0 10px; color: var(--ink); line-height:1.55; font-size:13.6px}
+    .bullets{margin:0; padding-left: 18px}
+    .bullets li{margin: 7px 0; line-height:1.5; font-size:13.5px}
+    .bullets b{color: var(--ink)}
+    /* Footer */
+    .resume-footer{
+      border-top:1px solid var(--line);
+      padding: 12px 16px;
+      color: var(--muted);
+      font-size: 11.5px;
+      line-height:1.4;
+      background: rgba(0,0,0,.12);
+    }
+    .footer-keywords b{color: var(--ink)}
+    /* Print */
+    @media print{
+      body{padding:0; background:white}
+      .page{box-shadow:none; border:0; border-radius:0; max-width:none}
+      .layout{grid-template-columns: 260px 1fr}
+      .sidebar{border-right:1px solid #ddd}
+      .resume-footer{border-top:1px solid #ddd}
+      a{text-decoration:none}
+    }
+  </style>
+</head>
+<body>
+  <section class="page">
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="name">
+          <span>{{person.first_name}}</span>
+          <span>{{person.last_name}}</span>
+        </div>
+        <div class="role">SOAR / SIEM / AUTOMATION</div>
+
+        <div class="section-title">Personal Info</div>
+        <div class="block pi" role="list">
+          {{#personal_info}}
+          <div class="pi-item" role="listitem">
+            <div class="pi-label">{{label}}</div>
+            <div class="pi-value">{{#href}}<a href="{{href}}">{{value}}</a>{{/href}}{{^href}}{{value}}{{/href}}</div>
+          </div>
+          {{/personal_info}}
+        </div>
+
+        <div class="section-title">Skills</div>
+        <div class="block skills" role="list">
+          {{#skills}}
+          <div class="skill" role="listitem">
+            <div class="skill-name">{{name}}</div>
+            <div class="skill-bar" aria-label="{{name}} proficiency"><span style="width: {{percent}}%;"></span></div>
+          </div>
+          {{/skills}}
+        </div>
+
+        <div class="section-title">Certs &amp; Education</div>
+        <div class="block">
+          <ul class="list">
+            {{#certs_education}}
+            <li>{{#href}}<a href="{{href}}">{{text}}</a>{{/href}}{{^href}}{{text}}{{/href}}</li>
+            {{/certs_education}}
+          </ul>
+        </div>
+
+        <div class="section-title">Acknowledgments</div>
+        <div class="block">
+          <ul class="list">
+            {{#acknowledgments}}
+            <li>{{#href}}<a href="{{href}}">{{text}}</a>{{/href}}{{^href}}{{text}}{{/href}}</li>
+            {{/acknowledgments}}
+          </ul>
+        </div>
+      </aside>
+
+      <main class="main">
+        <p class="summary">{{summary}}</p>
+
+        {{#experience}}
+        <article class="job">
+          <div class="job-header">
+            <div class="job-dates">{{dates}}</div>
+            <div>
+              <div class="job-title">{{title}}</div>
+              <div class="job-company">{{company}}</div>
+              <p class="job-desc">{{description}}</p>
+              <ul class="bullets">
+                {{#bullets}}
+                <li>{{#lead}}<b>{{lead}}</b> {{/lead}}{{text}}</li>
+                {{/bullets}}
+              </ul>
+            </div>
+          </div>
+        </article>
+        {{/experience}}
+      </main>
+    </div>
+
+    <footer class="resume-footer">
+      <div class="footer-keywords"><b>Keywords:</b> {{keywords}}</div>
+    </footer>
+  </section>
+</body>
+</html>
